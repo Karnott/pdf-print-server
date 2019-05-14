@@ -1,0 +1,12 @@
+FROM golang:1.12.5-alpine3.9
+
+WORKDIR $GOPATH/src/github.com/karnott/pdf-print-server/
+ADD . $GOPATH/src/github.com/karnott/pdf-print-server/
+
+RUN apk add -U git bash gcc
+RUN apk add -U --no-cache xvfb wkhtmltopdf
+
+ENV GO111MODULE on
+RUN go build -o /go/bin/pdf-print-server main.go
+
+# CMD pdf-print-server
