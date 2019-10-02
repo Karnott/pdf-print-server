@@ -14,6 +14,9 @@ import (
 
 func main() {
 	http.HandleFunc("/pdf", handlePDF)
+	http.HandleFunc("/health", func(writer http.ResponseWriter, request *http.Request) {
+		writer.WriteHeader(200)
+	})
 
 	port := os.Getenv("PORT")
 	if port == "" {
