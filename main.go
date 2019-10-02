@@ -7,13 +7,21 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	pdf "github.com/SebastiaanKlippert/go-wkhtmltopdf"
 )
 
 func main() {
 	http.HandleFunc("/pdf", handlePDF)
-	http.ListenAndServe(":80", nil)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "80"
+	}
+
+	// Launch
+	_ = http.ListenAndServe(fmt.Sprintf(":%s", port), nil)
 }
 
 func handlePDF(w http.ResponseWriter, r *http.Request) {
